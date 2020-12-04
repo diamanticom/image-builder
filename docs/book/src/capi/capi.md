@@ -8,7 +8,7 @@ The Image Builder can be used to build images intended for use with Kubernetes [
 
 - [Packer](https://www.packer.io/intro/getting-started/install.html) version >= 1.6.0
 - [Goss plugin for Packer](https://github.com/YaleUniversity/packer-provisioner-goss) version >= 1.2.0
-- [Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html) version >= 2.8.0
+- [Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html) version >= 2.10.0
 
 If any needed binaries are not present, they can be installed to `images/capi/.bin` with the `make deps` command. This directory will need to be added to your `$PATH`.
 
@@ -17,7 +17,7 @@ If any needed binaries are not present, they can be installed to `images/capi/.b
 * [AWS](./providers/aws.md)  
 * [Azure](./providers/azure.md)
 * [DigitalOcean](./providers/digitalocean.md)
-* Google *TODO*
+* [GCP](./providers/gcp.md)
 * [OpenStack](./providers/openstack.md)
 * [vSphere](./providers/vsphere.md)
 
@@ -37,6 +37,8 @@ The `images/capi/packer/config` directory includes several JSON files that defin
 | `packer/config/cni.json` | The version of Kubernetes CNI to install |
 | `packer/config/containerd.json` | The version of containerd to install and customizations specific to the containerd runtime |
 | `packer/config/kubernetes.json` | The version of Kubernetes to install |
+
+Due to OS differences, Windows images has additional configuration in the `packer/config/windows` folder.  See [Windows documentation](windows/windows.md) for more details.
 
 ### Customization
 
@@ -134,11 +136,3 @@ Then, execute the build (using a Photon OVA as an example) with the following:
 ```sh
 PACKER_VAR_FILES=proxy.json make build-node-ova-local-photon-3
 ```
-
-## Kubernetes versions
-| Tested Kubernetes Versions |
-|---------|
-| `1.14.x` |
-| `1.15.x` |
-| `1.16.x` |
-| `1.17.x` |
