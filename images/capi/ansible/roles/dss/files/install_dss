@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -x
+# If DSS does not need to be installed exit
+if [ "$1" -eq 0 ]; then
+   exit
+fi
+
+mkdir -p /etc/systemd/system/default.target.wants/
+mkdir -p /etc/diamanti/ultima
+cd /home/centos/
+tar xvf /home/centos/dss_aws_ami.tar
+dnf install -y nvme-cli
+cd /home/centos/dss_aws_ami
+cp dssapp-init.service /usr/lib/systemd/system/
+ln -s /usr/lib/systemd/system/dssapp-init.service /etc/systemd/system/default.target.wants/dssapp-init.service
+cp diamanti-dss-setup.sh /usr/local/bin/
+cp dss_devpath.sh /usr/local/bin/dss_devpath.sh
+cp dss.conf  /etc/modules-load.d/
+modprobe -r uio_pci_generic
+mv /lib/modules/`uname -r`/kernel/drivers/uio/uio.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio.ko.xz.orig
+mv /lib/modules/`uname -r`/kernel/drivers/uio/uio_pci_generic.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio_pci_generic.ko.xz.orig
+cp uio.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio.ko.xz
+cp uio_pci_generic.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio_pci_generic.ko.xz
+
+modprobe uio_pci_generic
+modprobe nvme_tcp
+systemctl enable dssapp-init.service
+systemctl start dssapp-init.service

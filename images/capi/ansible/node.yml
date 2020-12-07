@@ -23,6 +23,8 @@
     - include_role:
         name: containerd
     - include_role:
+        name: dss
+    - include_role:
         name: kubernetes
     - include_role:
         name: "{{ role }}"

@@ -123,6 +123,7 @@ endif
 ifeq (1,$(strip $(ON_ERROR_ASK)))
 PACKER_FLAGS += -on-error=ask
 endif
+#PACKER_FLAGS += -debug
 
 # We want the var files passed to Packer to have a specific order, because the
 # precenence of the variables they contain depends on the order. Files listed
@@ -190,7 +191,7 @@ HAPROXY_OVA_LOCAL_BUILD_NAMES			:=	$(addprefix haproxy-ova-local-,$(PHOTON_VERSI
 HAPROXY_OVA_ESX_BUILD_NAMES			:=	$(addprefix haproxy-ova-esx-,$(PHOTON_VERSIONS))
 HAPROXY_OVA_VSPHERE_BUILD_NAMES		:=	$(addprefix haproxy-ova-vsphere-,$(PHOTON_VERSIONS))
 
-AMI_BUILD_NAMES			?=	ami-centos-7 ami-ubuntu-1804 ami-ubuntu-2004 ami-amazon-2
+AMI_BUILD_NAMES			?=	ami-centos-7 ami-centos-8 ami-ubuntu-1804 ami-ubuntu-2004 ami-amazon-2
 GCE_BUILD_NAMES			?=	gce-ubuntu-1804 ## gce-ubuntu-2004
 AZURE_BUILD_VHD_NAMES	?=	azure-vhd-ubuntu-1804 azure-vhd-ubuntu-2004 azure-vhd-centos-7 azure-vhd-windows-2019 azure-vhd-windows-2004
 AZURE_BUILD_SIG_NAMES	?=	azure-sig-ubuntu-1804 azure-sig-ubuntu-2004 azure-sig-centos-7 azure-sig-windows-2019 azure-sig-windows-2004
@@ -277,6 +278,7 @@ $(HAPROXY_OVA_VSPHERE_BUILD_TARGETS): deps-ova
 
 .PHONY: $(AMI_BUILD_TARGETS)
 $(AMI_BUILD_TARGETS): deps-ami
+	#packer build -debug $(PACKER_NODE_FLAGS) -var-file="$(abspath packer/ami/$(subst build-ami-,,$@).json)" $(ABSOLUTE_PACKER_VAR_FILES) packer/ami/packer.json
 	packer build $(PACKER_NODE_FLAGS) -var-file="$(abspath packer/ami/$(subst build-ami-,,$@).json)" $(ABSOLUTE_PACKER_VAR_FILES) packer/ami/packer.json
 
 .PHONY: $(AMI_VALIDATE_TARGETS)
@@ -347,6 +349,7 @@ $(QEMU_CLEAN_TARGETS):
 ##@ Builds
 build-ami-amazon-2: ## Builds Amazon-2 Linux AMI
 build-ami-centos-7: ## Builds CentOS 7 AMI
+build-ami-centos-8: ## Builds CentOS 8 AMI
 build-ami-ubuntu-1804: ## Builds Ubuntu 18.04 AMI
 build-ami-ubuntu-2004: ## Builds Ubuntu 20.04 AMI
 build-ami-all: $(AMI_BUILD_TARGETS) ## Builds all AMIs
@@ -435,6 +438,7 @@ build-qemu-all: $(QEMU_BUILD_TARGETS) ## Builds all Qemu images
 ##@ Validate packer config
 validate-ami-amazon-2: ## Validates Amazon-2 Linux AMI Packer config
 validate-ami-centos-7: ## Validates CentOS 7 AMI Packer config
+validate-ami-centos-8: ## Validates CentOS 8 AMI Packer config
 validate-ami-ubuntu-1804: ## Validates Ubuntu 18.04 AMI Packer config
 validate-ami-ubuntu-2004: ## Validates Ubuntu 20.04 AMI Packer config
 validate-ami-all: $(AMI_VALIDATE_TARGETS) ## Validates all AMIs Packer config

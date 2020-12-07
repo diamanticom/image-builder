@@ -22,8 +22,8 @@ common_rpms:
 - jq
 - open-vm-tools
 - python3-pip
-- python-netifaces
-- python-requests
+- python3-netifaces
+- python3-requests
 - socat
 - sysstat
 - yum-utils

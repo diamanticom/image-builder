@@ -1,4 +1,4 @@
-# Copyright 2020 The Kubernetes Authors.
+# Copyright 2018 The Kubernetes Authors.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,13 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-debs: ""
-extra_debs: ""
-pinned_debs: []
+- name: Copy in install_dss script
+  template:
+    src: files/install_dss
+    dest: /usr/local/bin/install_dss
+    owner: root
+    group: root
+    mode: 0755
 
-redhat_epel_rpm: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
-rpms: ""
-extra_rpms: ""
-
-disable_public_repos: false
-extra_repos: ""
+- name: Copy in dss_aws_ami.tar
+  copy:
+    src: files/dss_aws_ami.tar
+    dest: /home/centos/dss_aws_ami.tar
+    owner: root
+    group: root
+    mode: 0644

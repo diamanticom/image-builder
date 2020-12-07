@@ -21,31 +21,31 @@
       - awscli
   when: ansible_distribution != "Amazon"
 
-- name: install aws agents RPM
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution != "Amazon"
+#- name: install aws agents RPM
+#  package:
+#    name: "{{ item }}"
+#    state: present
+#  with_items:
+#    - https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+#  when:
+#    - ansible_os_family == "RedHat"
+#    - ansible_distribution != "Amazon"
 
 - name: install aws agents RPM
   package:
     name: "{{ item }}"
     state: present
   with_items:
-    - amazon-ssm-agent
+#    - amazon-ssm-agent
     - awscli
   when: ansible_distribution == "Amazon"
 
-- name: Ensure ssm agent is running RPM
-  service:
-    name: amazon-ssm-agent
-    state: started
-    enabled: yes
-  when: ansible_os_family == "RedHat"
+#- name: Ensure ssm agent is running RPM
+#  service:
+#    name: amazon-ssm-agent
+#    state: started
+#    enabled: yes
+#  when: ansible_os_family == "RedHat"
 
 - name: install aws agents Ubuntu
   shell: snap install amazon-ssm-agent --classic
