@@ -1,0 +1,8 @@
+{
+    "build_name": "centos-8",
+    "distribution": "centos",
+    "distribution_release": "core",
+    "distribution_version": "8",
+    "zone": "us-central1-a",
+    "ssh_username": "centos"
+}

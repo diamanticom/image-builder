@@ -2,7 +2,7 @@
   "disable_public_repos": "false",
   "extra_debs": "",
   "extra_repos": "",
-  "extra_rpms": "",
+  "extra_rpms": "cloud-init",
   "http_proxy": "",
   "https_proxy": "",
   "no_proxy": "",

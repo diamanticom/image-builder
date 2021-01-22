@@ -4,7 +4,7 @@
     "ansible_extra_vars": "",
     "project_id": "{{env `GCP_PROJECT_ID`}}",
     "build_timestamp": "{{timestamp}}",
-    "source_image_family": "{{user `build_name`}}-lts",
+    "source_image_family": "{{user `build_name`}}",
     "machine_type": "n1-standard-1",
     "encrypted": "false",
     "zone": null,
@@ -43,10 +43,10 @@
       "image_name": "cluster-api-{{user `build_name`}}-{{user `kubernetes_semver` | clean_resource_name}}-{{user `build_timestamp`}}",
       "image_family": "capi-{{user `build_name`}}-k8s-{{user `kubernetes_series` | clean_resource_name}}",
       "zone": "{{ user `zone` }}",
-      "ssh_username": "ubuntu",
+      "ssh_username": "{{user `ssh_username`}}",
       "labels": {
         "build_timestamp": "{{user `build_timestamp`}}",
-        "distribution": "ubuntu",
+        "distribution": "{{user `distribution`}}",
         "distribution_release": "{{user `distribution_release`}}",
         "distribution_version": "{{user `distribution_version`}}",
         "kubernetes_version": "{{user `kubernetes_semver` | clean_resource_name}}"
