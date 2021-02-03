@@ -20,10 +20,10 @@
     group: root
     mode: 0755
 
-- name: Copy in dss_aws_ami.tar
+- name: Copy in dss_pkg.tar
   copy:
-    src: files/dss_aws_ami.tar
-    dest: /home/centos/dss_aws_ami.tar
+    src: files/dss_pkg.tar
+    dest: /home/centos/dss_pkg.tar
     owner: root
     group: root
     mode: 0644

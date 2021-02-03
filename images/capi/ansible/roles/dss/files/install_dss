@@ -20,9 +20,14 @@ cp dss.conf  /etc/modules-load.d/
 modprobe -r uio_pci_generic
 mv /lib/modules/`uname -r`/kernel/drivers/uio/uio.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio.ko.xz.orig
 mv /lib/modules/`uname -r`/kernel/drivers/uio/uio_pci_generic.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio_pci_generic.ko.xz.orig
-cp centos-8.2/uio.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio.ko.xz
-cp centos-8.2/uio_pci_generic.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio_pci_generic.ko.xz
-
+centos83=`cat /etc/centos-release | grep 8.3 | wc -l`
+if [ ${centos83} -ne 0 ]; then
+   cp centos-8.3/uio.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio.ko.xz
+   cp centos-8.3/uio_pci_generic.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio_pci_generic.ko.xz
+else
+   cp centos-8.2/uio.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio.ko.xz
+   cp centos-8.2/uio_pci_generic.ko.xz /lib/modules/`uname -r`/kernel/drivers/uio/uio_pci_generic.ko.xz
+fi
 modprobe uio_pci_generic
 modprobe nvme_tcp
 systemctl enable dssapp-init.service
